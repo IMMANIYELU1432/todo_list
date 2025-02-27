@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title>TodoList</title>
+</head>
+<body>
+     <div class="container mx-auto w-1/2">
+        <form method="post" class="max-w-xl mx-auto fixed inset-x-0 top-0 z-50 bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-5">
+            <div class="mb-5">
+                <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white underline">GIVE TODO</label>
+                <div class="flex flex-row gap-2">
+                <input type="text" name="content" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your todo" autofocus required>
+                <input type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer" value="Add">
+               </div>
+            </div>
+        </form>
+           {% if todos|length < 1 %}
+            <div class="flex justify-center items-center h-96">
+                <h1 class="text-2xl text-blue-600 dark:text-blue-100">No todo found</h1>
+            </div>
+            {% else %}
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-34 mb-4">
+                <table class="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
+                    <thead class="text-xs text-white uppercase bg-blue-600 border-b border-blue-400 dark:text-white">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Content
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Date
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for todo in todos %}
+                        <tr class="bg-blue-600 border-b border-blue-400 hover:bg-blue-500">
+                            <td class="px-6 py-4 ">
+                                {{ todo.content }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ todo.date_created.date() }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="/update/{{todo.id}}" class="font-medium text-white hover:underline"><button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 cursor-pointer">
+                                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                                    Edit
+                                </span>
+                                </button>
+                              </a>
+                              <a href="/delete/{{todo.id}}" class="font-medium text-white hover:underline"><button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-800 via-red-600 to-orange-400 group-hover:from-red-800 group-hover:via-red-500 group-hover:to-orange-400 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 pointer cursor-pointer hover:text-white">
+                              <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                                    Delete
+                               </span>
+                               </button>
+                               </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+        
+</body>
+</html>
